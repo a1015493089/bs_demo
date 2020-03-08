@@ -1,4 +1,4 @@
 ##markdown 练习
-[点击测试](结果显示english) 
+[点击测试](www.baidu.com) 
 \
 AAAAAAAAAAAAAAAA
