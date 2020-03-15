@@ -52,7 +52,7 @@ public class PublishController {
 
         User user=null;
         Cookie[] cookies = request.getCookies();
-        if(cookies!=null){              //登入态检验
+        if(cookies!=null&&cookies.length!=0){              //登入态检验
             for (Cookie cookie : cookies) {
                 if(cookie.getName().equals("token")){
                     String token = cookie.getValue();
