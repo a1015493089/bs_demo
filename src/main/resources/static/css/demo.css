@@ -4,6 +4,7 @@ body{
 .main{
     margin: 30px;
     background-color: white;
+    padding: 30px;
 }
 .btn-publish{
     float: right;
@@ -17,4 +18,10 @@ body{
     font-size: 12px;
     font-weight: normal;
     color: #999;
+}
+.question{
+    margin: 30px;
+}
+.glyphicon{
+    margin:0px 0px 30px 30px;
 }

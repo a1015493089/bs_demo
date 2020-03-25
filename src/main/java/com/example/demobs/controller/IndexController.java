@@ -1,15 +1,15 @@
 package com.example.demobs.controller;
 
+import com.example.demobs.dto.PaginationDTO;
 import com.example.demobs.dto.QuestionDTO;
-import com.example.demobs.mapper.QuestionMapper;
 import com.example.demobs.mapper.UserMapper;
-import com.example.demobs.model.Question;
 import com.example.demobs.model.User;
 import com.example.demobs.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,9 @@ public class IndexController {
     private QuestionService questionService;
     @GetMapping("/")
     public  String index(HttpServletRequest request,
-                         Model model) {
+                         Model model,
+                         @RequestParam(name = "page",defaultValue = "1") Integer page,
+                         @RequestParam(name = "size",defaultValue = "2")Integer size) {
         Cookie[] cookies = request.getCookies();
         if(cookies!=null&&cookies.length!=0){              //登入态检验
             for (Cookie cookie : cookies) {
@@ -36,8 +38,8 @@ public class IndexController {
                 }
             }
         }
-        List<QuestionDTO> questionsList=questionService.list();
-        model.addAttribute("questions",questionsList);
+        PaginationDTO pagination=questionService.list(page,size);
+        model.addAttribute("pagination",pagination);
         return "index";
     }
 }

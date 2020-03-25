@@ -44,13 +44,13 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-<div class="container-fluid main">
+<div class="container-fluid main ">
     <div class="row">
         <div class="col-lg-9 .col-md-12	.col-sm-12 .col-xs-12">
             <h2>
                 <span class="glyphicon glyphicon-plus" aria-hidden="true">发起</span>
             </h2>
-            <form action="/publish" method="post">
+            <form action="/publish" method="post" class="question">
                 <div class="form-group">
                     <label for="title">问题标题:</label>
                     <input type="text" class="form-control" id="title" name="title" th:value="${title}"  placeholder="问题标题...">
