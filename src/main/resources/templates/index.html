@@ -14,11 +14,11 @@
 <div th:replace="~{navigation::nav}"></div>
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-lg-9 .col-md-12	.col-sm-12 .col-xs-12">
-            <h2>
+        <div class="col-lg-9 .col-md-12	.col-sm-12 .col-xs-12"> <!-- 左侧内容-->
+            <h2>  <!-- 为左侧内容的标题-->
                 <span class="glyphicon glyphicon-list" aria-hidden="true">发现</span>
             </h2>
-            <div class="media question" th:each="question:${pagination.questions}">
+            <div class="media question" th:each="question:${pagination.questions}"><!--问题循环-->
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
@@ -30,7 +30,7 @@
                     <span class="text-desc"> [[${question.commentCount}]]个评论 • [[${question.viewCount}]] 次浏览 • [[${#dates.format(question.gmtCreat,"dd MMMM yyyy")}]]</span>
                 </div>
             </div>
-            <nav aria-label="Page navigation">
+            <nav aria-label="Page navigation"><!--分页组-->
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}">
                         <a href="/?page=1" aria-label="Previous">
@@ -56,7 +56,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="col-lg-3 .col-md-12 .col-sm-12 .col-xs-12">
+        <div class="col-lg-3 .col-md-12 .col-sm-12 .col-xs-12"> <!--右侧内容-->
             <h3>问题发布指南</h3>
             问题标题：不超过25个字。<br>
             问题补充：详细描述问题，清晰直观，并提供一些相关的资料。<br>

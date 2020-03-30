@@ -1,7 +1,6 @@
 package com.example.demobs.controller;
 
 import com.example.demobs.dto.PaginationDTO;
-import com.example.demobs.dto.QuestionDTO;
 import com.example.demobs.mapper.UserMapper;
 import com.example.demobs.model.User;
 import com.example.demobs.service.QuestionService;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class IndexController {
