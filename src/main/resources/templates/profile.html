@@ -29,7 +29,8 @@
                     <span class="text-desc"> [[${question.commentCount}]]个评论 • [[${question.viewCount}]] 次浏览 • [[${#dates.format(question.gmtCreat,"dd MMMM yyyy")}]]</span>
                 </div>
             </div>
-            <nav aria-label="Page navigation"><!--分页组-->
+            <H2 class="noquestion" th:if="${pagination.totalPage==0}">您未发布任何问题！</H2>
+            <nav aria-label="Page navigation" th:if="${pagination.totalPage!=0}"><!--分页组-->
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}"><!--首页箭头-->
                         <a href="/profile/questions?page=1" aria-label="Previous">

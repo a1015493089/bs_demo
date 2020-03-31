@@ -21,7 +21,7 @@ public class PaginationDTO {
             totalPage = totalCount/size;
         }else{
             totalPage = totalCount/size+1;
-        }
+        };
         //提高容错
         if(page<1)page=1;
         else if(page>totalPage)page=totalPage;
