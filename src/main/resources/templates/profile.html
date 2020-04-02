@@ -33,24 +33,24 @@
             <nav aria-label="Page navigation" th:if="${pagination.totalPage!=0}"><!--分页组-->
                 <ul class="pagination">
                     <li th:if="${pagination.showFirstPage}"><!--首页箭头-->
-                        <a href="/profile/questions?page=1" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}(page=1)}"aria-label="Previous">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}"> <!--上一页箭头-->
-                        <a th:href="@{/profile/questions?(page=${(pagination.page)-1})}" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}(page=${(pagination.page)-1})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <!--页码循环--->
                     <li  th:each="page:${pagination.pages}" th:class="${pagination.page==page}?'active':''"> <a th:href="@{/profile/questions?(page=${page})}" th:text="${page}"></a></li>
                     <li th:if="${pagination.showNext}"><!--下一页箭头-->
-                        <a th:href="@{/profile/questions?(page=${(pagination.page)+1})}" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}(page=${(pagination.page)+1})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${pagination.showEndPage}"><!--尾页箭头-->
-                        <a th:href="@{/profile/questions?(page=${pagination.totalPage})}" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}(page=${pagination.totalPage})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
