@@ -1,6 +1,7 @@
 body{
     background: #efefef;
 }
+h2 {letter-spacing:5px}
 .main{
     margin: 30px;
     background-color: white;
@@ -19,11 +20,12 @@ body{
     font-weight: normal;
     color: #999;
 }
-.question{
-    margin: 30px;
+.question .edit{
+    color: #999;
+    font-size: 13px;
 }
-.glyphicon{
-    margin:0px 0px 30px 30px;
+.question .des{
+    font-size: 20px;
 }
 .profile .section{
     margin-top: 20px;

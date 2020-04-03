@@ -18,16 +18,20 @@
             <h2>  <!-- 为左侧内容的标题-->
                 <span class="glyphicon glyphicon-list" aria-hidden="true">发现</span>
             </h2>
+            <hr>
             <div class="media question" th:each="question:${pagination.questions}"><!--问题循环-->
+
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
+                        <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">  <!--头像-->
                     </a>
                 </div>
                 <div class="media-body" >
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
-                    <span th:text="${question.description}"></span>
-                    <span class="text-desc"> [[${question.commentCount}]]个评论 • [[${question.viewCount}]] 次浏览 • [[${#dates.format(question.gmtCreat,"dd MMMM yyyy")}]]</span>
+                    <h4 class="media-heading" >
+                        <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}" ></a>
+                    </h4>
+                    <span  th:text="${question.description}"></span>
+                    <span class="text-desc"> [[${question.commentCount}]]个评论 • [[${question.viewCount}]] 次浏览 • [[${#dates.format(question.gmtCreat,"yyyy-MM-dd HH:mm")}]]</span>
                 </div>
             </div>
             <h2 class="noquestion" th:if="${pagination.totalPage==0}">您未发布任何问题！</h2>
