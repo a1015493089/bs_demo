@@ -60,8 +60,6 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
         paginationDTO.setQuestions(questionDTOList);
-
-
         return paginationDTO;
     }
     //通过问题的ID码查找问题详情页面

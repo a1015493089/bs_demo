@@ -22,7 +22,7 @@
             <hr>
             <div class="col-lg-12 .col-md-12 .col-sm-12 .col-xs-12"><!--问题主体-->
                 <span class="des" th:text="${question.description}"></span><br/>
-                <a th:href="@{'/publish/'+${question.id}}"><span class="glyphicon glyphicon-pencil edit" >编辑</span></a>
+                <a th:if="${session.user!=null && session.user.id==question.creator}" th:href="@{'/publish/'+${question.id}}"><span class="glyphicon glyphicon-pencil edit" >编辑</span></a>
             </div>
             <hr class="col-lg-12 .col-md-12 .col-sm-12 .col-xs-12">
         </div>

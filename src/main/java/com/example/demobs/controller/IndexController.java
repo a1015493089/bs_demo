@@ -1,7 +1,6 @@
 package com.example.demobs.controller;
 
 import com.example.demobs.dto.PaginationDTO;
-import com.example.demobs.mapper.UserMapper;
 import com.example.demobs.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
