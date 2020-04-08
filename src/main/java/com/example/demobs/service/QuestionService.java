@@ -5,7 +5,9 @@ import com.example.demobs.dto.QuestionDTO;
 import com.example.demobs.mapper.QuestionMapper;
 import com.example.demobs.mapper.UserMapper;
 import com.example.demobs.model.Question;
+import com.example.demobs.model.QuestionExample;
 import com.example.demobs.model.User;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,15 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.count();
+        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
         paginationDTO.setPagination(totalCount,page,size);//输入最大行目 当前页数 每页容量 然后设置对应的参数值
         if(page<1)page=1;
         else if(page>paginationDTO.getTotalPage())page=paginationDTO.getTotalPage();
 
         Integer offset=size*(page-1);       //数据库查询下标
-        List<Question> questions = questionMapper.list(offset,size);//数据库查询语句执行
+
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
+
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         //question到questionDTO的转换
         for (Question question : questions) {
@@ -44,12 +48,20 @@ public class QuestionService {
 
     public PaginationDTO list(Integer userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
-        Integer totalCount = questionMapper.countByUserId(userId);
+
+        QuestionExample example = new QuestionExample();
+        example.createCriteria().andCreatorEqualTo(userId);
+        Integer totalCount = (int)questionMapper.countByExample(example);
+
         paginationDTO.setPagination(totalCount,page,size); //输入最大行目 当前页数 每页容量 然后设置对应的参数值
         if(page<1)page=1;
         else if(page>paginationDTO.getTotalPage())page=paginationDTO.getTotalPage();
         Integer offset=size*(page-1);       //数据库查询下标
-        List<Question> questions = questionMapper.listByUserId(userId,offset,size);//数据库查询语句执行
+
+        QuestionExample example1 = new QuestionExample();  //查询语句执行
+        example1.createCriteria().andCreatorEqualTo(userId);
+        List<Question> questions = questionMapper.selectByExampleWithRowbounds(example1, new RowBounds(offset, size));
+
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         //question到questionDTO的转换
         for (Question question : questions) {
@@ -64,7 +76,7 @@ public class QuestionService {
     }
     //通过问题的ID码查找问题详情页面
     public QuestionDTO getQuestionById(Integer id) {
-        Question question=questionMapper.getQuestionById(id);
+        Question question=questionMapper.selectByPrimaryKey(id);
         User user=userMapper.selectByPrimaryKey(question.getCreator());
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
@@ -76,10 +88,16 @@ public class QuestionService {
         if(question.getId()==null){ //没有问题ID 新建
             question.setGmtCreat(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreat());
-            questionMapper.creat(question);
+            questionMapper.insert(question);
         }else {//已有问题ID 修改
-            question.setGmtModified(System.currentTimeMillis());
-            questionMapper.update(question);
+            Question updateQuestion = new Question();
+            updateQuestion.setGmtModified(System.currentTimeMillis());
+            updateQuestion.setTitle(question.getTitle());
+            updateQuestion.setDescription(question.getDescription());
+            updateQuestion.setTag(question.getTag());
+            QuestionExample example = new QuestionExample();
+            example.createCriteria().andIdEqualTo(question.getId());
+            questionMapper.updateByExampleSelective(updateQuestion, example);
         }
     }
 }
