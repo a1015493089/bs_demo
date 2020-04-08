@@ -30,7 +30,7 @@ public class QuestionService {
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         //question到questionDTO的转换
         for (Question question : questions) {
-            User user=userMapper.findById(question.getCreator());
+            User user=userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
             questionDTO.setUser(user);
@@ -53,7 +53,7 @@ public class QuestionService {
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         //question到questionDTO的转换
         for (Question question : questions) {
-            User user=userMapper.findById(question.getCreator());
+            User user=userMapper.selectByPrimaryKey(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
             questionDTO.setUser(user);
@@ -65,7 +65,7 @@ public class QuestionService {
     //通过问题的ID码查找问题详情页面
     public QuestionDTO getQuestionById(Integer id) {
         Question question=questionMapper.getQuestionById(id);
-        User user=userMapper.findById(question.getCreator());
+        User user=userMapper.selectByPrimaryKey(question.getCreator());
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         questionDTO.setUser(user);

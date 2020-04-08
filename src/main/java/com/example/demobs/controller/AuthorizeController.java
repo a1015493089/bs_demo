@@ -2,14 +2,12 @@ package com.example.demobs.controller;
 
 import com.example.demobs.dto.AccessTokenDTO;
 import com.example.demobs.dto.GitHubUser;
-import com.example.demobs.mapper.UserMapper;
 import com.example.demobs.model.User;
 import com.example.demobs.provider.GitHubProvider;
 import com.example.demobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,8 +28,6 @@ public class AuthorizeController {
     @Value("${github.redirect.url}")
     private String redirect_url;
 
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
     private UserService userService;
