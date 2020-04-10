@@ -33,3 +33,6 @@ h2 {letter-spacing:5px}
 .noquestion{
     margin: 30px;
 }
+.error .jumbotron{
+    background: white;
+}

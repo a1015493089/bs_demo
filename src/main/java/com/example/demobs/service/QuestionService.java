@@ -2,6 +2,8 @@ package com.example.demobs.service;
 
 import com.example.demobs.dto.PaginationDTO;
 import com.example.demobs.dto.QuestionDTO;
+import com.example.demobs.exception.CustomizeException;
+import com.example.demobs.exception.CustomizeExceptionCode;
 import com.example.demobs.mapper.QuestionMapper;
 import com.example.demobs.mapper.UserMapper;
 import com.example.demobs.model.Question;
@@ -77,6 +79,9 @@ public class QuestionService {
     //通过问题的ID码查找问题详情页面
     public QuestionDTO getQuestionById(Integer id) {
         Question question=questionMapper.selectByPrimaryKey(id);
+        if(question==null){
+            throw new CustomizeException(CustomizeExceptionCode.QUESTION_NOT_FOUND);
+        }
         User user=userMapper.selectByPrimaryKey(question.getCreator());
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
@@ -97,7 +102,10 @@ public class QuestionService {
             updateQuestion.setTag(question.getTag());
             QuestionExample example = new QuestionExample();
             example.createCriteria().andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(updateQuestion, example);
+            int updated = questionMapper.updateByExampleSelective(updateQuestion, example);
+            if(updated!=1){ //即为问题不存在 例如修改问题的同时 问题被删除了
+                throw new CustomizeException(CustomizeExceptionCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 }
