@@ -4,6 +4,7 @@ import com.example.demobs.dto.PaginationDTO;
 import com.example.demobs.dto.QuestionDTO;
 import com.example.demobs.exception.CustomizeException;
 import com.example.demobs.exception.CustomizeExceptionCode;
+import com.example.demobs.mapper.QuestionExtMapper;
 import com.example.demobs.mapper.QuestionMapper;
 import com.example.demobs.mapper.UserMapper;
 import com.example.demobs.model.Question;
@@ -22,6 +23,8 @@ public class QuestionService {
     private UserMapper userMapper;
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
     public PaginationDTO list(Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
         Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
@@ -107,5 +110,12 @@ public class QuestionService {
                 throw new CustomizeException(CustomizeExceptionCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question=new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }

@@ -13,7 +13,9 @@ public class CustomizeExceptionHandle {
         if(e instanceof CustomizeException){
             model.addAttribute("message",e.getMessage());
         }else {
+            System.out.println(e.toString()); //控制台输出错误信息
             model.addAttribute("message","服务器错误，请稍微再试。");
+
         }
         return  new ModelAndView("error");
 

@@ -16,6 +16,8 @@ public class QuestionController {
     public String question(@PathVariable(name="id")Integer id,
                            Model model){
         QuestionDTO questionDTO=questionService.getQuestionById(id);
+        //增加阅读数 id不存在会抛出异常 进入error.html
+        questionService.incView(id);
         model.addAttribute("question",questionDTO);
         return "question";
     }
