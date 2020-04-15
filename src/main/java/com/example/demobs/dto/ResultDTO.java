@@ -1,7 +1,9 @@
 package com.example.demobs.dto;
 
+import com.example.demobs.exception.CustomizeException;
 import com.example.demobs.exception.CustomizeExceptionCode;
 import lombok.Data;
+import org.springframework.web.servlet.ModelAndView;
 
 @Data
 public class ResultDTO {
@@ -14,9 +16,13 @@ public class ResultDTO {
         return  resultDTO;
     }
 
+    public static ResultDTO errorof(CustomizeException e) {
+        return errorof(e.getCode(),e.getMessage());
+    }
     public static ResultDTO errorof(CustomizeExceptionCode notLogin) {
         return  errorof(notLogin.getCode(),notLogin.getMessage());
     }
+
     public static ResultDTO okof() {
         ResultDTO resultDTO=new ResultDTO();
         resultDTO.setCode(200);

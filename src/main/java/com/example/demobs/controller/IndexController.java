@@ -3,6 +3,7 @@ package com.example.demobs.controller;
 import com.example.demobs.dto.PaginationDTO;
 import com.example.demobs.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,13 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class IndexController {
+    @Value("${question.size}")
+    private Integer size;
+
     @Autowired
     private QuestionService questionService;
     @GetMapping("/")
     public  String index(HttpServletRequest request,
                          Model model,
-                         @RequestParam(name = "page",defaultValue = "1") Integer page,
-                         @RequestParam(name = "size",defaultValue = "2")Integer size) {
+                         @RequestParam(name = "page",defaultValue = "1") Integer page
+                         ) {
         PaginationDTO pagination=questionService.list(page,size);
         model.addAttribute("pagination",pagination);
         return "index";

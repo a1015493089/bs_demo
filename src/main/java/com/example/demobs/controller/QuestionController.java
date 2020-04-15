@@ -13,7 +13,7 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
     @GetMapping("/question/{id}")
-    public String question(@PathVariable(name="id")Integer id,
+    public String question(@PathVariable(name="id") Long id,
                            Model model){
         QuestionDTO questionDTO=questionService.getQuestionById(id);
         //增加阅读数 id不存在会抛出异常 进入error.html

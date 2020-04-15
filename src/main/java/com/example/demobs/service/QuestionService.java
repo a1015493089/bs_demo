@@ -36,6 +36,7 @@ public class QuestionService {
 
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
 
+
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         //question到questionDTO的转换
         for (Question question : questions) {
@@ -51,7 +52,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO list(Integer userId, Integer page, Integer size) {
+    public PaginationDTO list(Long userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
 
         QuestionExample example = new QuestionExample();
@@ -80,7 +81,7 @@ public class QuestionService {
         return paginationDTO;
     }
     //通过问题的ID码查找问题详情页面
-    public QuestionDTO getQuestionById(Integer id) {
+    public QuestionDTO getQuestionById(Long id) {
         Question question=questionMapper.selectByPrimaryKey(id);
         if(question==null){
             throw new CustomizeException(CustomizeExceptionCode.QUESTION_NOT_FOUND);
@@ -94,6 +95,9 @@ public class QuestionService {
 
     public void creatOrUpdate(Question question) {
         if(question.getId()==null){ //没有问题ID 新建
+            question.setViewCount(0);
+            question.setCommentCount(0);
+            question.setLikeCount(0);
             question.setGmtCreat(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreat());
             questionMapper.insert(question);
@@ -112,7 +116,7 @@ public class QuestionService {
         }
     }
 
-    public void incView(Integer id) {
+    public void incView(Long id) {
         Question question=new Question();
         question.setId(id);
         question.setViewCount(1);

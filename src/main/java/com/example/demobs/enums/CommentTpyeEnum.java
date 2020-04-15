@@ -5,6 +5,14 @@ public enum  CommentTpyeEnum {
     COMMENT(2);
     private Integer type;
 
+    public static boolean isExist(Integer parentType) {
+        for (CommentTpyeEnum commentTpyeEnum : CommentTpyeEnum.values()) {
+            if(commentTpyeEnum.getType() == parentType)
+            return true;
+        }
+        return false;
+    }
+
     public Integer getType() {
         return type;
     }
