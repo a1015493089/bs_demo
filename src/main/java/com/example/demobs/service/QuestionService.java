@@ -90,7 +90,7 @@ public class QuestionService {
         User user=userMapper.selectByPrimaryKey(question.getCreator());
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
-        questionDTO.setUser(user);
+        questionDTO.setUser(user); //该对象负责profile页面右侧的创造者信息展示
         return  questionDTO;
     }
 
