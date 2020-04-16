@@ -83,6 +83,7 @@ public class QuestionService {
     //通过问题的ID码查找问题详情页面
     public QuestionDTO getQuestionById(Long id) {
         Question question=questionMapper.selectByPrimaryKey(id);
+
         if(question==null){
             throw new CustomizeException(CustomizeExceptionCode.QUESTION_NOT_FOUND);
         }
