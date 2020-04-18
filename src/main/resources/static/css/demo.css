@@ -24,8 +24,15 @@ h2 {letter-spacing:5px}
     color: #999;
     font-size: 13px;
 }
+.question .media-body{
+    padding-top: 9px;
+}
 .question .des{
     font-size: 20px;
+}
+.question .btn-reply{
+    float: right;
+    margin: 10px;
 }
 .profile .section{
     margin-top: 20px;
