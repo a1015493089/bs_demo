@@ -16,7 +16,16 @@ function post() {
             if(response.code==200){
                 $("#reply_section").hide();
             }else {
-                alert(response.message);
+                if(response.code=2003){
+                    var isAccepted=confirm(response.message);
+                    if(isAccepted){
+                        window.open("https://github.com/login/oauth/authorize?client_id=06134c3c17d51fd76f7f&redirect_uri=http://localhost:9132/callback&scope=user&state=1");
+                        window.localStorage.setItem("closable",true);
+                    }
+                }else {
+                    alert(response.message);
+                }
+
             }
             console.log(response);
         },
