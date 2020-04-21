@@ -1,16 +1,24 @@
 package com.example.demobs.service;
 
+import com.example.demobs.dto.CommentDTO;
 import com.example.demobs.enums.CommentTpyeEnum;
 import com.example.demobs.exception.CustomizeException;
 import com.example.demobs.exception.CustomizeExceptionCode;
 import com.example.demobs.mapper.CommentMapper;
 import com.example.demobs.mapper.QuestionExtMapper;
 import com.example.demobs.mapper.QuestionMapper;
-import com.example.demobs.model.Comment;
-import com.example.demobs.model.Question;
+import com.example.demobs.mapper.UserMapper;
+import com.example.demobs.model.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -24,6 +32,8 @@ public class CommentService {
     @Autowired
     QuestionExtMapper questionExtMapper;
 
+    @Autowired
+    UserMapper userMapper;
     @Transactional
     public void insert(Comment comment) {
         if(comment.getParentId()==null||comment.getParentId()==0){
@@ -52,5 +62,34 @@ public class CommentService {
             dbQuestion.setCommentCount(1);
             questionExtMapper.incCommentCount(dbQuestion);
         }
+    }
+
+    public List<CommentDTO> listByQuestionId(Long id) {
+        CommentExample example = new CommentExample();
+        example.createCriteria()
+                .andParentIdEqualTo(id)
+                .andParentTypeEqualTo(CommentTpyeEnum.QUESTION.getType());
+        List<Comment> comments = commentMapper.selectByExample(example);
+        if (comments.size()==0){
+            return new ArrayList<>();
+        }
+        //拿取每个评论的用户 无序可重复
+        Set<Long> collect = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
+        List<Long> userids = new ArrayList<>();
+        userids.addAll(collect);
+        //为之后降低时间复杂度 所以需要转捍卫map
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andIdIn(userids);
+        List<User> users = userMapper.selectByExample(userExample);
+        Map<Long, User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
+        //降低时间复杂度后的数据类型转换
+        List<CommentDTO> commentDTOS = comments.stream().map(comment -> {
+            CommentDTO commentDTO = new CommentDTO();
+            BeanUtils.copyProperties(comment,commentDTO);
+            commentDTO.setUser(userMap.get(comment.getCommentator()));
+            return commentDTO;
+        }).collect(Collectors.toList());
+
+        return commentDTOS;
     }
 }

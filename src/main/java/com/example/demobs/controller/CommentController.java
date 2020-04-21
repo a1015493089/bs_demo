@@ -1,6 +1,6 @@
 package com.example.demobs.controller;
 
-import com.example.demobs.dto.CommentDTO;
+import com.example.demobs.dto.CommentCreatDTO;
 import com.example.demobs.dto.ResultDTO;
 import com.example.demobs.exception.CustomizeExceptionCode;
 import com.example.demobs.model.Comment;
@@ -24,7 +24,7 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO,
+    public Object post(@RequestBody CommentCreatDTO commentCreatDTO,
                        HttpServletRequest request){
 
         User user = (User)request.getSession().getAttribute("user");
@@ -34,9 +34,9 @@ public class CommentController {
 
 
         Comment comment = new Comment();
-        comment.setParentId(commentDTO.getParentID());
-        comment.setContent(commentDTO.getContent());
-        comment.setParentType(commentDTO.getType());
+        comment.setParentId(commentCreatDTO.getParentID());
+        comment.setContent(commentCreatDTO.getContent());
+        comment.setParentType(commentCreatDTO.getType());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
         comment.setCommentator(user.getId());

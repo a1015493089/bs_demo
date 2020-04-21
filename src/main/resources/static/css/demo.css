@@ -34,6 +34,29 @@ h2 {letter-spacing:5px}
     float: right;
     margin: 10px;
 }
+.question .reply_hr{
+    margin-top: 0px;
+}
+.question .icon{
+    color: #999;
+}
+.question .a_edit{
+    display: block;
+    margin-bottom: 15px;
+}
+.question .icon .tag{
+    font-size: 24px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.question .icon .tag:hover{
+    color: #499ef3;
+}
+.comments{
+    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+}
 .profile .section{
     margin-top: 20px;
 }
