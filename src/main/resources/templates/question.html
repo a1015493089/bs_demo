@@ -17,42 +17,45 @@
 <div class="container-fluid main profile question">
     <div class="row">
         <div class="col-lg-9 .col-md-12	.col-sm-12 .col-xs-12"> <!--左侧区域-->
-            <div class="col-lg-12 .col-md-12	.col-sm-12 .col-xs-12"><!--问题区域-->
+            <div class="col-lg-12 .col-md-12 .col-sm-12 .col-xs-12"><!--问题区域-->
                 <h3>                                                <!---问题标题-->
                     <span  aria-hidden="true" th:text="${question.title}"></span>
                 </h3>
                 <span class="text-desc">&nbsp作者:[[${question.user.name}]] &nbsp| &nbsp阅读数：[[${question.viewCount}]]&nbsp |&nbsp发布时间：[[${#dates.format(question.gmtCreat,"yyyy-MM-dd HH:mm")}]]</span>
-                <hr>
+                <hr class="col-lg-12 .col-md-12	.col-sm-12 .col-xs-12">
                 <div class="col-lg-12 .col-md-12 .col-sm-12 .col-xs-12"><!--问题主体-->
                     <span class="des" th:text="${question.description}"></span><br/>
                     <a class="a_edit" th:if="${session.user!=null && session.user.id==question.creator}" th:href="@{'/publish/'+${question.id}}"><span class="glyphicon glyphicon-pencil edit" >编辑</span></a>
                 </div>
-                <hr>
+                <hr class="col-lg-12 .col-md-12	.col-sm-12 .col-xs-12">
             </div>
             <!--回复展示区域-->
-            <h4>
-                <span th:text="${question.commentCount}"></span>个回复
-            </h4>
-            <hr class="reply_hr">
-            <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12 comments" th:each="comment:${comments}">
-                <div> <!--头像+个人名称-->
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">  <!--头像-->
-                        </a>
+            <div class="col-lg-12 .col-md-1 .col-sm-12 .col-xs-12">
+                <h4>
+                    <span th:text="${question.commentCount}"></span>个回复
+                </h4>
+                <hr class="col-lg-12 .col-md-12	.col-sm-12 .col-xs-12">
+                <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12 comments" th:each="comment:${comments}">
+                    <div> <!--头像+个人名称-->
+                        <div class="media-left">
+                         <a href="#">
+                                <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">  <!--头像-->
+                         </a>
+                        </div>
+                        <div class="media-body" >
+                            <h4 class="media-heading" >
+                                <a href="/profile/questions" th:text="${comment.user.name}"></a>
+                            </h4>
+                        </div>
                     </div>
-                    <div class="media-body" >
-                        <h4 class="media-heading" >
-                            <a href="/profile/questions" th:text="${comment.user.name}"></a>
-                        </h4>
+                    <div th:text="${comment.content}">
                     </div>
-                </div>
-                <div th:text="${comment.content}"></div>
-                <!--标签页-->
-                <div class="icon">
-                    <span class="glyphicon glyphicon-thumbs-up tag"></span>
-                    <span class="glyphicon glyphicon-comment tag"></span>
-                    <span class="pull-right">[[${#dates.format(comment.gmtCreate,"yyyy-MM-dd HH:mm")}]]</span>
+                    <!--标签页-->
+                    <div class="icon">
+                        <span class="glyphicon glyphicon-thumbs-up tag"></span>
+                        <span class="glyphicon glyphicon-comment tag"></span>
+                        <span class="pull-right">[[${#dates.format(comment.gmtCreate,"yyyy-MM-dd HH:mm")}]]</span>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-12 .col-md-12	.col-sm-12 .col-xs-12"  id="reply_section"><!--回复区域-->

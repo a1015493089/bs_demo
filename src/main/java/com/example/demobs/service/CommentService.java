@@ -69,6 +69,7 @@ public class CommentService {
         example.createCriteria()
                 .andParentIdEqualTo(id)
                 .andParentTypeEqualTo(CommentTpyeEnum.QUESTION.getType());
+        example.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(example);
         if (comments.size()==0){
             return new ArrayList<>();
@@ -89,7 +90,6 @@ public class CommentService {
             commentDTO.setUser(userMap.get(comment.getCommentator()));
             return commentDTO;
         }).collect(Collectors.toList());
-
         return commentDTOS;
     }
 }

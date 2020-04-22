@@ -6,6 +6,7 @@ import com.example.demobs.exception.CustomizeExceptionCode;
 import com.example.demobs.model.Comment;
 import com.example.demobs.model.User;
 import com.example.demobs.service.CommentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,9 @@ public class CommentController {
         User user = (User)request.getSession().getAttribute("user");
         if(user==null){
            return ResultDTO.errorof(CustomizeExceptionCode.NOT_LOGIN);
+        }
+       if(commentCreatDTO==null|| StringUtils.isBlank(commentCreatDTO.getContent())){
+            return ResultDTO.errorof(CustomizeExceptionCode.COMMENT_IS_EMPTY);
         }
 
 
