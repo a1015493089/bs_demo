@@ -2,6 +2,7 @@ package com.example.demobs.controller;
 
 import com.example.demobs.dto.CommentDTO;
 import com.example.demobs.dto.QuestionDTO;
+import com.example.demobs.enums.CommentTpyeEnum;
 import com.example.demobs.service.CommentService;
 import com.example.demobs.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class QuestionController {
         QuestionDTO questionDTO=questionService.getQuestionById(id);
         //增加阅读数 id不存在会抛出异常 进入error.html
         questionService.incView(id);
-        List<CommentDTO> comments=commentService.listByQuestionId(id);
+        List<CommentDTO> comments=commentService.listByTargetId(id, CommentTpyeEnum.QUESTION);
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",comments);
         return "question";

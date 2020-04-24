@@ -49,6 +49,22 @@ h2 {letter-spacing:5px}
     margin-right: 25px;
     cursor: pointer;
 }
+.question .active{
+    color: #499ef3;
+}
+.question .c2nd_btn{
+    margin: 10px;
+
+}
+
+.question .c2nd{
+    border: 2px solid #eee;
+    padding-top: 15px;
+    margin-top: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
 .question .icon .tag:hover{
     color: #499ef3;
 }

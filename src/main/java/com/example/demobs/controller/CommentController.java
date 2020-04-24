@@ -1,7 +1,9 @@
 package com.example.demobs.controller;
 
 import com.example.demobs.dto.CommentCreatDTO;
+import com.example.demobs.dto.CommentDTO;
 import com.example.demobs.dto.ResultDTO;
+import com.example.demobs.enums.CommentTpyeEnum;
 import com.example.demobs.exception.CustomizeExceptionCode;
 import com.example.demobs.model.Comment;
 import com.example.demobs.model.User;
@@ -9,12 +11,10 @@ import com.example.demobs.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -35,8 +35,6 @@ public class CommentController {
        if(commentCreatDTO==null|| StringUtils.isBlank(commentCreatDTO.getContent())){
             return ResultDTO.errorof(CustomizeExceptionCode.COMMENT_IS_EMPTY);
         }
-
-
         Comment comment = new Comment();
         comment.setParentId(commentCreatDTO.getParentID());
         comment.setContent(commentCreatDTO.getContent());
@@ -46,6 +44,12 @@ public class CommentController {
         comment.setCommentator(user.getId());
         commentService.insert(comment);
         return ResultDTO.okof();
+    }
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDTO< List<CommentDTO>> comments(@PathVariable(name="id")Long id){
+        List<CommentDTO> comments=commentService.listByTargetId(id, CommentTpyeEnum.COMMENT);
+        return ResultDTO.okof(comments);
     }
 
 }
