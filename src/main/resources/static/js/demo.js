@@ -47,21 +47,25 @@ function collapseComment(e) {
     var id=e.getAttribute("data-id");
     var T1 = $("#comment-"+id);
     // 状态→0关 1开
+    console.log(T1);
+    console.log(e.getAttribute("data-opened"));
+
     if(e.getAttribute("data-opened")==1){
         //展开状态
         e.classList.remove("active");
         e.setAttribute("data-opened",0);
         T1.removeClass("in");
+
     }else {
         var subCommentContainer =$("#comment-"+id);
+        e.classList.add("active");
+        e.setAttribute("data-opened",1);
+        T1.addClass("in");
         //解决多次访问多次读取数据累加的情况
         if(subCommentContainer.children().length!=1){
-            e.classList.add("active");
-            e.setAttribute("data-opened",1);
-            T1.addClass("in");
+
         }else {
             $.getJSON("/comment/"+id,function (data) {
-                console.log(data);
                 $.each(data.data,function (index,comment) {
                     //左侧区域
                     var mediaLeftElement=$("<div/>",{
@@ -89,7 +93,6 @@ function collapseComment(e) {
                     var commentElement=$("<div/>",{
                         "class":"col-lg-12 .col-md-12.col-sm-12 .col-xs-12 comments"
                     }).append(mediaElement);
-
                     subCommentContainer.prepend(commentElement);
                 });
             })
