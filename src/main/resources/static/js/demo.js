@@ -53,11 +53,46 @@ function collapseComment(e) {
         e.setAttribute("data-opened",0);
         T1.removeClass("in");
     }else {
-        e.classList.add("active");
-        e.setAttribute("data-opened",1);
-        T1.addClass("in");
-    }
+        var subCommentContainer =$("#comment-"+id);
+        //解决多次访问多次读取数据累加的情况
+        if(subCommentContainer.children().length!=1){
+            e.classList.add("active");
+            e.setAttribute("data-opened",1);
+            T1.addClass("in");
+        }else {
+            $.getJSON("/comment/"+id,function (data) {
+                console.log(data);
+                $.each(data.data,function (index,comment) {
+                    //左侧区域
+                    var mediaLeftElement=$("<div/>",{
+                        "class":"media-left"
+                    }).append($("<img/>",{
+                        "class":"media-object img-rounded",
+                        "src":comment.user.avatarUrl
+                    }));
+                    //中心区域
+                    var mediaBodyElement=$("<div/>",{
+                        "class":"media-body"
+                    }).append($("<h4/>",{
+                        "class":"media-heading",
+                        "html":comment.user.name
+                    })).append($("<div/>",{
+                        "html":comment.content
+                    })).append($("<div/>",{
+                        "class":"icon"
+                    }).append($("<span/>",{
+                        "class":"pull-right",
+                        "html":moment().format('YYYY-MM-DD hh:mm')
+                    })));
+                    var mediaElement=$("<div/>",{
+                    }).append(mediaLeftElement).append(mediaBodyElement);
+                    var commentElement=$("<div/>",{
+                        "class":"col-lg-12 .col-md-12.col-sm-12 .col-xs-12 comments"
+                    }).append(mediaElement);
 
-    console.log(e);
-    console.log(T1);
+                    subCommentContainer.prepend(commentElement);
+                });
+            })
+        }
+    }
 }

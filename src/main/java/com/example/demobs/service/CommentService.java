@@ -4,10 +4,7 @@ import com.example.demobs.dto.CommentDTO;
 import com.example.demobs.enums.CommentTpyeEnum;
 import com.example.demobs.exception.CustomizeException;
 import com.example.demobs.exception.CustomizeExceptionCode;
-import com.example.demobs.mapper.CommentMapper;
-import com.example.demobs.mapper.QuestionExtMapper;
-import com.example.demobs.mapper.QuestionMapper;
-import com.example.demobs.mapper.UserMapper;
+import com.example.demobs.mapper.*;
 import com.example.demobs.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,9 @@ public class CommentService {
     QuestionExtMapper questionExtMapper;
 
     @Autowired
+    CommentExtMapper commentExtMapper;
+
+    @Autowired
     UserMapper userMapper;
     @Transactional
     public void insert(Comment comment) {
@@ -52,12 +52,18 @@ public class CommentService {
                 throw  new CustomizeException(CustomizeExceptionCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+            //显示二级回复总数
+            Comment dbcomment=new Comment();
+            dbComment.setId(comment.getParentId());
+            dbComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(dbComment);
         }else {
             //操作对象为问题
             Question dbQuestion = questionMapper.selectByPrimaryKey(comment.getParentId());
             if(dbQuestion==null){
                 throw  new CustomizeException(CustomizeExceptionCode.QUESTION_NOT_FOUND);
             }
+            //显示回复总数
             commentMapper.insert(comment);
             dbQuestion.setCommentCount(1);
             questionExtMapper.incCommentCount(dbQuestion);

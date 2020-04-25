@@ -9,6 +9,7 @@
     <script src="/js/bootstrap.min.js" ></script>
     <link rel="stylesheet" href="/css/demo.css">
     <script src="/js/demo.js"></script>
+    <script src="/js/moment.js"></script>
 
 
 </head>
@@ -54,31 +55,30 @@
                     <!--标签页-->
                     <div class="icon">
                         <span class="glyphicon glyphicon-thumbs-up tag"></span>
-                        <span class="glyphicon glyphicon-comment tag " th:data-id="${comment.id}" th:data-opened="0" onclick="collapseComment(this)"></span>
+                        <span class="glyphicon glyphicon-comment tag " th:data-id="${comment.id}" th:data-opened="0" onclick="collapseComment(this)" th:text="${comment.commentCount}"></span>
                         <span class="pull-right">[[${#dates.format(comment.gmtCreate,"yyyy-MM-dd HH:mm")}]]</span>
                     </div>
                     <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12  c2nd collapse" th:id="${'comment-'+comment.id}" >
-                        <!--二级回复-->
-                        <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12 comments " th:each="comment:${comments}">
-                                <div> <!--头像+个人名称-->
-                                <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">  <!--头像-->
-                                    </a>
-                                </div>
-                                <div class="media-body" >
-                                    <h4 class="media-heading" >
-                                        <a href="/profile/questions" th:text="${comment.user.name}"></a>
-                                    </h4>
-                                </div>
-                            </div>
-                                <div th:text="${comment.content}">
-                            </div>
-                                <!--标签页-->
-                                <div class="icon">
-                                <span class="pull-right">[[${#dates.format(comment.gmtCreate,"yyyy-MM-dd HH:mm")}]]</span>
-                            </div>
-                        </div>
+                        <!--二级回复 此处为后台标签写入的参照-->
+                        <!--<div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12 comments " th:each="comment:${comments}">-->
+                            <!--<div> &lt;!&ndash;头像+个人名称&ndash;&gt;-->
+                                <!--<div class="media-left">-->
+                                    <!--<a href="#">-->
+                                        <!--<img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">  &lt;!&ndash;头像&ndash;&gt;-->
+                                    <!--</a>-->
+                                <!--</div>-->
+                                <!--<div class="media-body" >-->
+                                    <!--<h4 class="media-heading" th:text="${comment.user.name}">-->
+                                    <!--</h4>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                                <!--<div th:text="${comment.content}">-->
+                            <!--</div>-->
+                                <!--&lt;!&ndash;标签页&ndash;&gt;-->
+                                <!--<div class="icon">-->
+                                <!--<span class="pull-right">[[${#dates.format(comment.gmtCreate,"yyyy-MM-dd HH:mm")}]]</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <!--二级回复评论输入框-->
                         <div>
                             <input type="text" class="form-control" placeholder="请评论……" th:id="${'comment2-'+comment.id}">
