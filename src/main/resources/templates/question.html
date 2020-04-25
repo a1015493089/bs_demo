@@ -57,7 +57,7 @@
                         <span class="glyphicon glyphicon-comment tag " th:data-id="${comment.id}" th:data-opened="0" onclick="collapseComment(this)"></span>
                         <span class="pull-right">[[${#dates.format(comment.gmtCreate,"yyyy-MM-dd HH:mm")}]]</span>
                     </div>
-                    <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12 collapse c2nd " th:id="${'comment-'+comment.id}" >
+                    <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12  c2nd collapse" th:id="${'comment-'+comment.id}" >
                         <!--二级回复-->
                         <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12 comments " th:each="comment:${comments}">
                                 <div> <!--头像+个人名称-->
@@ -78,13 +78,11 @@
                                 <div class="icon">
                                 <span class="pull-right">[[${#dates.format(comment.gmtCreate,"yyyy-MM-dd HH:mm")}]]</span>
                             </div>
-                                <div class="col-lg-12 .col-md-12.col-sm-12 .col-xs-12 collapse " th:id="${'comment-'+comment.id}" >
-                            </div>
                         </div>
                         <!--二级回复评论输入框-->
                         <div>
                             <input type="text" class="form-control" placeholder="请评论……" th:id="${'comment2-'+comment.id}">
-                            <button type="button" class="btn btn-success pull-right c2nd_btn" onclick="comment(this)"  th:data-id="${comment.id}"  >评论</button>
+                            <button type="button" class="btn btn-success pull-right c2nd_btn" onclick="comment(this)"  th:data-id="${comment.id}">评论</button>
                         </div>
                     </div>
                 </div>

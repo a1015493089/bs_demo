@@ -41,36 +41,23 @@ function comment(e) {
     var id=e.getAttribute("data-id");
     var content = $("#comment2-"+id).val();
     comment2target(id,2,content);
-
-    
 }
 //二级评论的显示控制
 function collapseComment(e) {
     var id=e.getAttribute("data-id");
+    var T1 = $("#comment-"+id);
     // 状态→0关 1开
     if(e.getAttribute("data-opened")==1){
         //展开状态
         e.classList.remove("active");
         e.setAttribute("data-opened",0);
+        T1.removeClass("in");
     }else {
-       /* $.getJSON("/comment/"+id,function (data) {
-        console.log(data);
-        var commentBody = $("#comment-body"+ id);
-        commentBody.appendChild();
-        var items=[];
-        $.each(data.data,function (key,val) {
-            items.push("<li id='"+ key +"'>" +val +"</li>");
-        });
-        $("<div/>",{
-            "class":"col-lg-12 .col-md-12.col-sm-12 .col-xs-12 collapse c2nd",
-            "id":"comment-"+id,
-            html:items.join("")
-        }).appendTo(commentBody);
-
-        });*/
         e.classList.add("active");
         e.setAttribute("data-opened",1);
+        T1.addClass("in");
     }
-    console.log(id);
-    $("#comment-"+id).toggle("in");
+
+    console.log(e);
+    console.log(T1);
 }
