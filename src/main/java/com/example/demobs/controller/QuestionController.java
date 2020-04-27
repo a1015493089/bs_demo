@@ -23,11 +23,13 @@ public class QuestionController {
     public String question(@PathVariable(name="id") Long id,
                            Model model){
         QuestionDTO questionDTO=questionService.getQuestionById(id);
+        List<QuestionDTO> relatedQuestions=questionService.selectRelated(questionDTO);
         //增加阅读数 id不存在会抛出异常 进入error.html
         questionService.incView(id);
         List<CommentDTO> comments=commentService.listByTargetId(id, CommentTpyeEnum.QUESTION);
         model.addAttribute("question",questionDTO);
         model.addAttribute("comments",comments);
+        model.addAttribute("relatedQuestions",relatedQuestions);
         return "question";
     }
 }

@@ -54,6 +54,9 @@ h2 {letter-spacing:5px}
     padding: 7px;
     text-align: center;
 }
+.label-info{
+    margin-right: 5px;
+}
 .question .active{
     color: #499ef3;
 }
@@ -72,6 +75,19 @@ h2 {letter-spacing:5px}
 
 .question .icon .tag:hover{
     color: #499ef3;
+}
+.question .related-ul{
+    padding-left: 0px;
+    line-height: 40px;
+    list-style: none;
+    font-size: 20px;
+}
+.question .related-a{
+    text-decoration: none;
+    cursor: pointer;
+    color: #337ab7;
+
+
 }
 .comments{
     border-bottom: 1px solid #eee;
