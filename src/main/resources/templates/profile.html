@@ -30,7 +30,7 @@
                     <h4 class="media-heading" >
                         <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}" ></a>
                     </h4>
-                    <span class="text-desc"> [[${question.commentCount}]]个评论 • [[${question.viewCount}]] 次浏览 • [[${#dates.format(question.gmtCreat,"dd MMMM yyyy")}]]</span>
+                    <span class="text-desc"> [[${question.commentCount}]]个评论 • [[${question.viewCount}]] 次浏览 • [[${#dates.format(question.gmtCreat,"yyyy-MM-dd HH:mm")}]]</span>
                 </div>
             </div>
             <H2 class="noquestion" th:if="${pagination.totalPage==0}">您未发布任何问题！</H2>

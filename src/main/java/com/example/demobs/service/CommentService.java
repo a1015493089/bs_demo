@@ -51,6 +51,7 @@ public class CommentService {
             if(dbComment==null){
                 throw  new CustomizeException(CustomizeExceptionCode.COMMENT_NOT_FOUND);
             }
+            comment.setCommentCount(0);
             commentMapper.insert(comment);
             //显示二级回复总数
             Comment dbcomment=new Comment();
@@ -63,6 +64,7 @@ public class CommentService {
             if(dbQuestion==null){
                 throw  new CustomizeException(CustomizeExceptionCode.QUESTION_NOT_FOUND);
             }
+            comment.setCommentCount(0);
             //显示回复总数
             commentMapper.insert(comment);
             dbQuestion.setCommentCount(1);
@@ -84,7 +86,7 @@ public class CommentService {
         Set<Long> collect = comments.stream().map(comment -> comment.getCommentator()).collect(Collectors.toSet());
         List<Long> userids = new ArrayList<>();
         userids.addAll(collect);
-        //为之后降低时间复杂度 所以需要转捍卫map
+        //为之后降低时间复杂度 所以需要转换为map
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdIn(userids);
         List<User> users = userMapper.selectByExample(userExample);
@@ -96,6 +98,7 @@ public class CommentService {
             commentDTO.setUser(userMap.get(comment.getCommentator()));
             return commentDTO;
         }).collect(Collectors.toList());
+
         return commentDTOS;
     }
 }
