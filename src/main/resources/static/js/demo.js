@@ -108,8 +108,6 @@ function showSelectTag(e) {
         Tags.hide();
         e.setAttribute("data-open","off");
     }
-
-
 }
 function selectTag(value,e) {
     var state=e.getAttribute("data-switch");

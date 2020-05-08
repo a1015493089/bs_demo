@@ -60,7 +60,6 @@ public class QuestionService {
 
     public PaginationDTO list(Long userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO();
-
         QuestionExample example = new QuestionExample();
         example.createCriteria().andCreatorEqualTo(userId);
         Integer totalCount = (int)questionMapper.countByExample(example);
@@ -72,6 +71,7 @@ public class QuestionService {
 
         QuestionExample example1 = new QuestionExample();  //查询语句执行
         example1.createCriteria().andCreatorEqualTo(userId);
+        example1.setOrderByClause("gmt_creat desc");
         List<Question> questions = questionMapper.selectByExampleWithRowbounds(example1, new RowBounds(offset, size));
 
         List<QuestionDTO> questionDTOList=new ArrayList<>();
