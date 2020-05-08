@@ -98,7 +98,6 @@ public class CommentService {
             commentDTO.setUser(userMap.get(comment.getCommentator()));
             return commentDTO;
         }).collect(Collectors.toList());
-
         return commentDTOS;
     }
 }

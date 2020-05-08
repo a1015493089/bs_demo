@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js" ></script>
+    <script src="/js/demo.js" ></script>
     <link rel="stylesheet" href="/css/demo.css">
 </head>
 <body>
@@ -22,7 +23,7 @@
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
                     <label for="title">问题标题:</label>
-                    <input type="text" class="form-control" id="title" name="title" th:value="${title}"  placeholder="问题标题...">
+                    <input type="text" class="form-control" id="title" autocomplete="off" name="title" th:value="${title}"  placeholder="问题标题...">
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充(必填,参考右侧标准):</label>
@@ -30,7 +31,48 @@
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
-                    <input type="text" class="form-control" id="tag" name="tag" th:value="${tag}" placeholder="添加标签以,分隔">
+                    <input type="text" class="form-control" id="tag" name="tag" autocomplete="off" th:value="${tag}"
+                           onclick="showSelectTag(this)"
+                           readonly="readonly"
+                           style="background: white;"
+                           th:data-open="off"
+                           placeholder="点击添加标签">
+                    <div id="Select-Tag" style="display: none;
+                                                border: 3px solid rgb(238, 238, 238);
+                                                margin-top: 5px;
+                                                padding: 5px 5px 100px;
+                                                border-radius: 10px;
+                    ">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 15px">
+                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">生活</a></li>
+                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">学习</a></li>
+                            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">工作</a></li>
+                            <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">组织</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home" >
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('生活',this)" th:data-switch="off">生活</span>
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('生活',this)" th:data-switch="off">生活</span>
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('生活',this)" th:data-switch="off">生活</span>
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('生活',this)" th:data-switch="off">生活</span>
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('生活',this)" th:data-switch="off">生活</span>
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('生活',this)" th:data-switch="off">生活</span>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('学习',this)" th:data-switch="off">学习</span>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="messages">
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('工作',this)" th:data-switch="off">工作</span>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="settings">
+                                <span class="glyphicon label label-info pulish-tag" aria-hidden="true" onclick="selectTag('组织',this)" th:data-switch="off">组织</span>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <span th:text="${error}" th:if="${error!=null}"></span>
                 <button type="submit" class="btn btn-success btn-publish">提交</button>

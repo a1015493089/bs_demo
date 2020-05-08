@@ -63,7 +63,6 @@ function collapseComment(e) {
         T1.addClass("in");
         //解决多次访问多次读取数据累加的情况
         if(subCommentContainer.children().length!=1){
-
         }else {
             $.getJSON("/comment/"+id,function (data) {
                 $.each(data.data,function (index,comment) {
@@ -98,4 +97,49 @@ function collapseComment(e) {
             })
         }
     }
+}
+function showSelectTag(e) {
+    var Tags=$("#Select-Tag");
+    var state = e.getAttribute("data-open");
+    if(state=="off"){
+        Tags.show();
+        e.setAttribute("data-open","on");
+    }else {
+        Tags.hide();
+        e.setAttribute("data-open","off");
+    }
+
+
+}
+function selectTag(value,e) {
+    var state=e.getAttribute("data-switch");
+    var prevalue = $("#tag").val();
+    if(state=="off"){
+        if(prevalue==null){
+            $("#tag").val(value);
+        }
+        if(prevalue.indexOf(value)==-1){
+            if(prevalue)
+                $("#tag").val(prevalue+','+value);
+            else
+                $("#tag").val(value);
+        }
+        e.setAttribute("data-switch","on");
+    }
+
+    if(state=="on"){
+        if(prevalue.indexOf(','+value)==-1&&prevalue.indexOf(value)!=0){
+
+            $("#tag").val(prevalue.replace(value,""));
+        }
+        else if(prevalue.indexOf(value)==0){
+            $("#tag").val(prevalue.replace(value+',',""));
+        }
+        else {
+            $("#tag").val(prevalue.replace(','+value,""));
+        }
+        e.setAttribute("data-switch","off");
+    }
+
+
 }
