@@ -7,7 +7,9 @@ public enum CustomizeExceptionCode implements  ICustomizeExceptionCode {
     SYS_ERROR(2004,"服务器熟了！"),
     TYPE_PARAM_NOT_FOUND(2005,"回复对象类型不明！"),
     COMMENT_NOT_FOUND(2006,"执行回复的对象回复不存在！"),
-    COMMENT_IS_EMPTY(2007,"回复内容不可为空！");
+    COMMENT_IS_EMPTY(2007,"回复内容不可为空！"),
+    TARGET_ERROR(2008,"登入对象与实现该功能的权限不符"),
+    NOTIFICATION_NOT_EXIST(2008,"消息对象不存在");
 
     private  String message;
     private Integer code;
