@@ -2,6 +2,7 @@ package com.example.demobs.service;
 
 import com.example.demobs.dto.PaginationDTO;
 import com.example.demobs.dto.QuestionDTO;
+import com.example.demobs.dto.QuestionQueryDTO;
 import com.example.demobs.exception.CustomizeException;
 import com.example.demobs.exception.CustomizeExceptionCode;
 import com.example.demobs.mapper.QuestionExtMapper;
@@ -28,19 +29,33 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private QuestionExtMapper questionExtMapper;
-    public PaginationDTO list(Integer page, Integer size) {
+    public PaginationDTO list(String search,Integer page, Integer size) {
+
+        if(StringUtils.isNotBlank(search)){
+            search=StringUtils.replace(search," ","|");
+        }
+
+
+
         PaginationDTO paginationDTO = new PaginationDTO();
 
-        Integer totalCount = (int)questionMapper.countByExample(new QuestionExample());
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount = questionExtMapper.countBySearch(questionQueryDTO);
+
         paginationDTO.setPagination(totalCount,page,size);//输入最大行目 当前页数 每页容量 然后设置对应的参数值
         if(page<1)page=1;
-        else if(page>paginationDTO.getTotalPage())page=paginationDTO.getTotalPage();
+
+        else if(page>paginationDTO.getTotalPage())
+            page=paginationDTO.getTotalPage();
 
         Integer offset=size*(page-1);       //数据库查询下标
 
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("gmt_creat desc");
-        List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
+        questionQueryDTO.setPage(offset);
+        questionQueryDTO.setSize(size);
+        List<Question> questions = questionExtMapper.countSelectSearch(questionQueryDTO);
 
 
         List<QuestionDTO> questionDTOList=new ArrayList<>();

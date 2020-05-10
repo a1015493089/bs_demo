@@ -29,4 +29,23 @@
     from QUESTION
     where id!=#{id} and tag regexp #{tag}
   </select>
+  <select id="countBySearch" parameterType="com.example.demobs.dto.QuestionQueryDTO" resultType="java.lang.Integer">
+    select count(*)
+    from QUESTION
+    <where>
+      <if test="search!=null">
+       and  TITLE  regexp #{search}
+      </if>
+    </where>
+  </select>
+  <select id="countSelectSearch" parameterType="com.example.demobs.dto.QuestionQueryDTO" resultMap="BaseResultMap">
+    select *
+    from QUESTION
+    <where>
+      <if test="search!=null">
+       and  TITLE  regexp #{search}
+      </if>
+    </where>
+    order  by gmt_creat desc  limit #{page}, #{size}
+  </select>
 </mapper>
